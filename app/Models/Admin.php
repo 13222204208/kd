@@ -4,17 +4,18 @@ namespace App\Models;
 
 use App\Traits\Timestamp;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, Timestamp;
+    use HasFactory,Timestamp,Notifiable;
+    protected $guarded = [];
 
     /**
-     * 获取会储存到 jwt 声明中的标识
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
      * @return mixed
      */
     public function getJWTIdentifier()
@@ -23,11 +24,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * 返回包含要添加到 jwt 声明中的自定义键值对数组
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
      * @return array
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'user'];
+        return ['role' => 'admin'];
     }
 }
