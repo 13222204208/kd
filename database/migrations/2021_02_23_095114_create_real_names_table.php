@@ -20,7 +20,7 @@ class CreateRealNamesTable extends Migration
             $table->string('id_front')->comment('身份证正面');
             $table->string('id_reverse_side')->comment('身份证反面');
             $table->tinyInteger('user_id')->comment('用户id');
-            $table->tinyInteger('status')->comment('状态');
+            $table->tinyInteger('status')->default(1)->comment('1未审核，2已认证');
             $table->timestamps();
 
             $table->comment="身份证认证表";

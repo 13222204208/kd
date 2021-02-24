@@ -15,6 +15,7 @@ class CreateExpressOrdersTable extends Migration
     {
         Schema::create('express_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_num')->comment('订单号');
             $table->string('send_name')->comment('发货人姓名');
             $table->string('send_phone')->comment('发货人手机号');
             $table->string('send_address')->comment('发货人地址');
@@ -30,6 +31,7 @@ class CreateExpressOrdersTable extends Migration
             $table->string('comment')->default('')->comment('备注');
             $table->string('reply')->default('')->comment('后台回复内容');
             $table->tinyInteger('status')->default(1)->comment('1未付款，2已付款');
+            $table->integer('user_id')->comment('用户id');
             $table->timestamps();
 
             $table->comment="快递订单表";

@@ -15,7 +15,9 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "tymon/jwt-auth": "dev-develop",
-        "overtrue/laravel-wechat": "^5.1"
+        "overtrue/laravel-wechat": "^5.1",
+        "ofcold/identity-card": "^3.2",
+        "intervention/image": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

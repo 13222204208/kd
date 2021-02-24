@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class ExpressOrder extends Model
 {
     use HasFactory, Timestamp;
+
+    protected $guarded = [];
+
+    public function userInfo()
+    {
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
 }
