@@ -17,6 +17,9 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->string('name')->comment('收货人姓名');
             $table->string('phone')->comment('手机号');
+            $table->string('province')->comment('省');
+            $table->string('city')->comment('市');
+            $table->string('area')->comment('区');
             $table->string('address')->comment('收货人地址');
             $table->string('detailed_address')->comment('详细地址');
             $table->string('site')->default('')->comment('站点');

@@ -17,7 +17,9 @@ class AddressController extends Controller
                 $data,
                 [
                     'name' => 'required|max:20',
-                    'address' => 'required',
+                    'province' => 'required',
+                    'city' => 'required',
+                    'area' => 'required',
                     'detailed_address' => 'required|max:120',
                     'phone' => 'required|max:20',
                     'site' => 'required|max:120',
@@ -30,7 +32,9 @@ class AddressController extends Controller
                 ],
                 [
                     'name' => '收货人姓名',
-                    'address' => '地址',
+                    'province' => '省',
+                    'city' => '市',
+                    'area' => '区',
                     'detailed_address' => '详细地址',
                     'phone' => '手机号',
                     'site' => '站点',
@@ -45,7 +49,10 @@ class AddressController extends Controller
             $user= auth('api')->user();
             $address= new Address();
             $address->name= $data['name'];
-            $address->address= $data['address'];
+            $address->province= $data['province'];
+            $address->city= $data['city'];
+            $address->area= $data['area'];
+            $address->address= $data['province'].'-'.$data['city'].'-'.$data['area'];
             $address->detailed_address= $data['detailed_address'];
             $address->phone= $data['phone'];
             $address->site= $data['site'];
@@ -105,7 +112,9 @@ class AddressController extends Controller
                 $data,
                 [
                     'name' => 'required|max:20',
-                    'address' => 'required',
+                    'province' => 'required',
+                    'city' => 'required',
+                    'area' => 'required',
                     'detailed_address' => 'required|max:120',
                     'phone' => 'required|max:20',
                     'site' => 'required|max:120',
@@ -118,7 +127,9 @@ class AddressController extends Controller
                 ],
                 [
                     'name' => '收货人姓名',
-                    'address' => '地址',
+                    'province' => '省',
+                    'city' => '市',
+                    'area' => '区',
                     'detailed_address' => '详细地址',
                     'phone' => '手机号',
                     'site' => '站点',
@@ -130,11 +141,12 @@ class AddressController extends Controller
                 $messages = $validator->errors()->first();
                 return $this->failed($messages);
             }
+
             $user= auth('api')->user();
             unset($data['token']);
             $addressID= $data['address_id'];
             unset($data['address_id']);
-
+            $data['address'] = $data['province'].'-'.$data['city'].'-'.$data['area'];
             Address::where('user_id',$user->id)->where('id',$addressID)->update($data);
             return $this->success();
         } catch (\Throwable $th) {

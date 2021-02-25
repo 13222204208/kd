@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('nickname')->default('')->comment('用户昵称');
             $table->string('avatar')->default('')->comment('头像');
             $table->tinyInteger('status')->default(1)->comment('1正常，2禁用');
+            $table->tinyInteger('audit_status')->default(0)->comment('0未审核，1，已审核');
             $table->timestamps();
         });
     }

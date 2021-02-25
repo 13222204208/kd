@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Order;
+namespace App\Http\Controllers\Admin\GoodsType;
 
 use App\Http\Controllers\Controller;
-use App\Models\ExpressOrder;
+use App\Models\GoodsType;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class GoodsTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,18 +19,9 @@ class OrderController extends Controller
             $all= $request->all(); 
             $limit = $all['limit'];
             $page = ($all['page'] -1)*$limit;
-            $order_num = false;
-            if($request->order_num){
-                $order_num =$all['order_num'];
-            }
             
-            $item= ExpressOrder::skip($page)->take($limit)->with(['userInfo'=>function($query){
-                $query->select('id', 'phone'); // 需要同时查询关联外键的字段
-            }])->when($order_num, function($query) use($order_num){
-                $query->where('order_num','like','%'.$order_num.'%')->get();
-            })
-            ->orderBy('created_at','desc')->get();
-            $total= ExpressOrder::count();
+            $item= GoodsType::skip($page)->take($limit)->orderBy('created_at','desc')->get();
+            $total= GoodsType::count();
             $data['item'] = $item;
             $data['total'] = $total;
             return $this->success($data);
@@ -57,7 +48,22 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $goodsType= $request->title;
+            $goodsType = str_replace('，',',',$goodsType);
+            $goodsType = explode(',',$goodsType);
+
+            foreach ($goodsType as $value) {
+                GoodsType::create([
+                    'title'=>$value
+                ]);
+            }
+
+            return $this->success();
+
+        } catch (\Throwable $th) {
+            return $this->failed('物品名称不能重复');
+        }
     }
 
     /**
@@ -80,7 +86,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         try {
-            $data= ExpressOrder::find($id);
+            $data= GoodsType::find($id);
             return $this->success($data);
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());
@@ -97,9 +103,9 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            ExpressOrder::where('id',$id)->update([
-                'reply' => $request->reply
-            ]);
+            $data= GoodsType::find($id);
+            $data->title= $request->title;
+            $data->save();
             return $this->success();
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());
@@ -114,22 +120,17 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            ExpressOrder::destroy($id);
-            return $this->success();
-        } catch (\Throwable $th) {
-            return $this->failed($th->getMessage());
-        }
+        //
     }
 
-    public function changeOrder(Request $request , $id)
+    public function goodsTypeStatus(Request $request, $id)
     {
         try {
-            $status= 1;
-            if($request->status ==1){
-                $status =2;
+            $status= 0;
+            if($request->status == 0){
+                $status= 1;
             }
-            ExpressOrder::where('id',$id)->update([
+            GoodsType::where('id',$id)->update([
                 'status' => $status
             ]);
             return $this->success();

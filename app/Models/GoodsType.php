@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 class GoodsType extends Model
 {
     use HasFactory, Timestamp;
+    protected $guarded = [];
 }

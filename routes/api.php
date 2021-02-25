@@ -29,6 +29,10 @@ Route::prefix('minapp')->group(function (){
             Route::get('order-list', 'ExpressOrderController@orderList');//订单列表
         });
     });
+
+    Route::group(['namespace' => 'Minapp\GoodsType'], function () {
+            Route::get('goods-type', 'GoodsTypeController@goodsType');//物品类型
+    });
 });
 
 Route::prefix('admin')->group(function (){
@@ -44,54 +48,12 @@ Route::prefix('admin')->group(function (){
         });
     });
 
-    Route::group(['namespace' => 'Admin\Contact'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            
-            Route::resource('contact-us', 'ContactUsController');//联系我们
-            
-            
-        });
-    });
-
-    Route::group(['namespace' => 'Admin\UserAgreement'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            
-            Route::resource('agreement', 'UserAgreementController');//用户协议
-                   
-        });
-    });
-
-    Route::group(['namespace' => 'Admin\Consult'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            
-            Route::resource('consult-type', 'ConsultTypeController');//参考类型
-
-            Route::resource('consult', 'ConsultController');//参考内容      
-        });
-    });
 
     Route::group(['namespace' => 'Admin\RealName'], function () {
 
         Route::group(['middleware' => 'auth:admin'], function () {   
             Route::resource('real-name', 'RealNameController');//实名认证
             
-        });
-    });
-
-    Route::group(['namespace' => 'Admin\Notepad'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            Route::resource('notepad', 'NotepadController');//记事本
-        });
-    });
-
-    Route::group(['namespace' => 'Admin\Triage'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            Route::resource('triage', 'TriageController');//检伤分类
         });
     });
 
@@ -106,15 +68,10 @@ Route::prefix('admin')->group(function (){
 
         Route::group(['middleware' => 'auth:admin'], function () {   
             Route::resource('order', 'OrderController');//订单列表
+            Route::post('change-order/{id}', 'OrderController@changeOrder');//付款状态
         });
     });
 
-    Route::group(['namespace' => 'Admin\Position'], function () {
-
-        Route::group(['middleware' => 'auth:admin'], function () {   
-            Route::resource('position', 'PositionController');//设置位置列表
-        });
-    });
 
     Route::group(['namespace' => 'Admin\Admin'], function () {
 
@@ -127,6 +84,21 @@ Route::prefix('admin')->group(function (){
 
         Route::group(['middleware' => 'auth:admin'], function () {   
             Route::resource('user', 'UserController');//app用户帐号
+        });
+    });
+
+    Route::group(['namespace' => 'Admin\User'], function () {
+
+        Route::group(['middleware' => 'auth:admin'], function () {   
+            Route::resource('user', 'UserController');//app用户帐号
+        });
+    });
+
+    Route::group(['namespace' => 'Admin\GoodsType'], function () {
+
+        Route::group(['middleware' => 'auth:admin'], function () {   
+            Route::resource('goods-type', 'GoodsTypeController');//物品类型
+            Route::post('goods-type-status/{id}', 'GoodsTypeController@goodsTypeStatus');//更改物品类型状态
         });
     });
 

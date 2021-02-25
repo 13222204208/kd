@@ -15,9 +15,9 @@ class CreateGoodsTypesTable extends Migration
     {
         Schema::create('goods_types', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
+            $table->tinyInteger('status')->default(1)->comment('1正常，0禁用');
             $table->timestamps();
-
             $table->comment="物品类型";
         });
     }
