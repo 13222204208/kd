@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\UserAgreement;
 
 use Illuminate\Http\Request;
-use App\Models\UserAgreement;
+use App\Models\ServiceAgreement;
 use App\Http\Controllers\Controller;
 
 class UserAgreementController extends Controller
@@ -16,7 +16,7 @@ class UserAgreementController extends Controller
     public function index()
     {
         try {
-            $data= UserAgreement::all();     
+            $data= ServiceAgreement::find(1);     
             return $this->success($data);
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());
@@ -42,7 +42,7 @@ class UserAgreementController extends Controller
     public function store(Request $request)
     {
         try {
-            $agreement = new UserAgreement;
+            $agreement = new ServiceAgreement;
             $agreement->type = $request->type;
             $agreement->content = $request->content;
             $agreement->save();
@@ -72,7 +72,7 @@ class UserAgreementController extends Controller
     public function edit($id)
     {
         try {
-            $data= UserAgreement::find($id);
+            $data= ServiceAgreement::find($id);
             return $this->success($data);
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());
@@ -89,8 +89,9 @@ class UserAgreementController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data= UserAgreement::find($id);
+            $data= ServiceAgreement::find($id);
             $data->content = $request->content;
+            $data->title = $request->title;
             $data->save();
             return $this->success();
         } catch (\Throwable $th) {

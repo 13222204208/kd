@@ -66,7 +66,7 @@ class AddressController extends Controller
     }
 
     public function addressList(Request $request)
-    {
+    { 
         try {
             $user= auth('api')->user();
             if(intval($request->address_id) != 0){
