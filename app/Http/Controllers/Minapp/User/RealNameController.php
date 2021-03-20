@@ -14,7 +14,7 @@ class RealNameController extends Controller
 
     public function uploadImg(Request $request)
     {
-        try {
+        try { 
             $imgUrl= $this->getNewFile($request->file);
             return $this->success($imgUrl);
         } catch (\Throwable $th) {

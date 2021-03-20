@@ -21,7 +21,7 @@ class RealNameController extends Controller
             $page = ($all['page'] -1)*$limit;
             
             $item= RealName::skip($page)->take($limit)->with(['userInfo'=>function($query){
-                $query->select('id', 'phone'); // 需要同时查询关联外键的字段
+                $query->select('id', 'nickname'); // 需要同时查询关联外键的字段
             }])->orderBy('created_at','desc')->get();
             $total= RealName::count();
             $data['item'] = $item;

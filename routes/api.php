@@ -9,9 +9,10 @@ Route::prefix('minapp')->group(function (){
 
         Route::post('login', 'LoginController@login');//用户登陆
         Route::get('agreement', 'AgreementController@agreement');//服务协议
-
+        
+        Route::post('upload-img', 'RealNameController@uploadImg');//上传图片 
         Route::group(['middleware' => 'auth:api'], function () {   
-            Route::post('upload-img', 'RealNameController@uploadImg');//上传图片      
+             
             Route::post('real-name', 'RealNameController@realName');//实名认证    
 
             Route::post('store-address', 'AddressController@storeAddress');//添加新地址
